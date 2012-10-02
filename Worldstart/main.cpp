@@ -75,7 +75,7 @@ static void vertexPlace()
         }
     }
 }
-//this is for triangle creation
+//this is for triangle creation given a point
 static void triangle(int a, int b, int c)
 {
     int aup = a+1;
@@ -85,7 +85,7 @@ static void triangle(int a, int b, int c)
     if(c%2 == 0)
     {
     //for even row  pointing up triangles
-    glColor3ub(100,100,100);
+    glColor3ub(0,0,0);
     glBegin(GL_POLYGON);
         glVertex4d(vertices[a][b][c][0],vertices[a][b][c][1],vertices[a][b][c][2],1);
         glVertex4d(vertices[aup][b][c][0],vertices[aup][b][c][1],vertices[aup][b][c][2],1);
@@ -93,7 +93,7 @@ static void triangle(int a, int b, int c)
     glEnd();
 
     //for even row pointing down triangles
-    glColor3ub(100,0,100);
+    glColor3ub(0,0,0);
     glBegin(GL_POLYGON);
         glVertex4d(vertices[a][b][cup][0],vertices[a][b][cup][1],vertices[a][b][cup][2],1);
         glVertex4d(vertices[aup][b][c][0],vertices[aup][b][c][1],vertices[aup][b][c][2],1);
@@ -102,20 +102,22 @@ static void triangle(int a, int b, int c)
 
     glColor3ub(255,255,255);
     glBegin(GL_LINES);
-        glVertex4d(vertices[a][b][cup][0],vertices[a][b][cup][1],vertices[a][b][cup][2],1);
-        glVertex4d(vertices[aup][b][c][0],vertices[aup][b][c][1],vertices[aup][b][c][2],1);
-        glVertex4d(vertices[aup][b][c][0],vertices[aup][b][c][1],vertices[aup][b][c][2],1);
-        glVertex4d(vertices[aup][b][cup][0],vertices[aup][b][cup][1],vertices[aup][b][cup][2],1);
-        glVertex4d(vertices[aup][b][cup][0],vertices[aup][b][cup][1],vertices[aup][b][cup][2],1);
-        glVertex4d(vertices[a][b][cup][0],vertices[a][b][cup][1],vertices[a][b][cup][2],1);
         glVertex4d(vertices[a][b][c][0],vertices[a][b][c][1],vertices[a][b][c][2],1);
         glVertex4d(vertices[aup][b][c][0],vertices[aup][b][c][1],vertices[aup][b][c][2],1);
+        glVertex4d(vertices[aup][b][c][0],vertices[aup][b][c][1],vertices[aup][b][c][2],1);
+        glVertex4d(vertices[a][b][cup][0],vertices[a][b][cup][1],vertices[a][b][cup][2],1);
+        glVertex4d(vertices[a][b][cup][0],vertices[a][b][cup][1],vertices[a][b][cup][2],1);
+        glVertex4d(vertices[a][b][c][0],vertices[a][b][c][1],vertices[a][b][c][2],1);
+        glVertex4d(vertices[a][b][cup][0],vertices[a][b][cup][1],vertices[a][b][cup][2],1);
+        glVertex4d(vertices[aup][b][cup][0],vertices[aup][b][cup][1],vertices[aup][b][cup][2],1);
+        glVertex4d(vertices[aup][b][cup][0],vertices[aup][b][cup][1],vertices[aup][b][cup][2],1);
+        glVertex4d(vertices[a][b][cup][0],vertices[a][b][cup][1],vertices[a][b][cup][2],1);
     glEnd();
     }
     else
     {
     //for odd row pointing up triangles
-    glColor3ub(100,100,100);
+    glColor3ub(0,0,0);
     glBegin(GL_POLYGON);
         glVertex4d(vertices[adown][b][c][0],vertices[adown][b][c][1],vertices[adown][b][c][2],1);
         glVertex4d(vertices[a][b][c][0],vertices[a][b][c][1],vertices[a][b][c][2],1);
@@ -123,7 +125,7 @@ static void triangle(int a, int b, int c)
     glEnd();
 
     //for odd row pointing down triangles
-    glColor3ub(100,0,100);
+    glColor3ub(0,0,0);
     glBegin(GL_POLYGON);
         glVertex4d(vertices[a][b][cup][0],vertices[a][b][cup][1],vertices[a][b][cup][2],1);
         glVertex4d(vertices[a][b][c][0],vertices[a][b][c][1],vertices[a][b][c][2],1);
@@ -132,13 +134,15 @@ static void triangle(int a, int b, int c)
 
     glColor4ub(255,255,255,1);
     glBegin(GL_LINES);
+        glVertex4d(vertices[adown][b][c][0],vertices[adown][b][c][1],vertices[adown][b][c][2],1);
+        glVertex4d(vertices[a][b][c][0],vertices[a][b][c][1],vertices[a][b][c][2],1);
+        glVertex4d(vertices[a][b][c][0],vertices[a][b][c][1],vertices[a][b][c][2],1);
         glVertex4d(vertices[a][b][cup][0],vertices[a][b][cup][1],vertices[a][b][cup][2],1);
-        glVertex4d(vertices[a][b][c][0],vertices[a][b][c][1],vertices[a][b][c][2],1);
-        glVertex4d(vertices[a][b][c][0],vertices[a][b][c][1],vertices[a][b][c][2],1);
-        glVertex4d(vertices[aup][b][cup][0],vertices[aup][b][cup][1],vertices[aup][b][cup][2],1);
-        glVertex4d(vertices[aup][b][cup][0],vertices[aup][b][cup][1],vertices[aup][b][cup][2],1);
         glVertex4d(vertices[a][b][cup][0],vertices[a][b][cup][1],vertices[a][b][cup][2],1);
         glVertex4d(vertices[adown][b][c][0],vertices[adown][b][c][1],vertices[adown][b][c][2],1);
+        glVertex4d(vertices[a][b][cup][0],vertices[a][b][cup][1],vertices[a][b][cup][2],1);
+        glVertex4d(vertices[aup][b][cup][0],vertices[aup][b][cup][1],vertices[aup][b][cup][2],1);
+        glVertex4d(vertices[aup][b][cup][0],vertices[aup][b][cup][1],vertices[aup][b][cup][2],1);
         glVertex4d(vertices[a][b][c][0],vertices[a][b][c][1],vertices[a][b][c][2],1);
     glEnd();
     }

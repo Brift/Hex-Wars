@@ -11,14 +11,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-class Triblock()
+static void Triblock()
 {
-    private:
-        glVector4d top1, top2, top3, bot1, bot2, bot3;
-        bool filled;
-        enum blocktype;
 
-    public:
-        //Constructor 0 args
-        Triblock() :
 }
