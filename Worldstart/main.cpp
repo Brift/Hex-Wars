@@ -25,7 +25,7 @@
 static int slices = 16;
 static int stacks = 16;
 static const double DEPTH = sqrt(3)/2;
-static GLdouble vertices[200][260][200][4] ;
+static GLdouble vertices[2002][2002][2] ;
 static int camerax=0;
 static int cameray=0;
 static int cameraz=0;
@@ -48,29 +48,23 @@ static void resize(int width, int height)
 
 static void vertexPlace()
 {
-    for(int z = 0; z < 200; z++)
+    for(int z = 0; z < 2002; z++)
     {
-        for(int y = 0; y < 260; y++)
+        for(int x=0; x < 2002; x++)
         {
-            for(int x=0; x < 200; x++)
+            if(z%2 == 0)
             {
-                if(z%2 == 0)
-                {
-                    float altz = -z * DEPTH;
-                    vertices[x][y][z][0]= x;
-                    vertices[x][y][z][1]= y;
-                    vertices[x][y][z][2]= altz;
-                    vertices[x][y][z][3]= 1;
-                }
-                else
-                {
-                    float altx = x+0.5;
-                    float altz = -z * DEPTH;
-                    vertices[x][y][z][0]= altx;
-                    vertices[x][y][z][1]= y;
-                    vertices[x][y][z][2]= altz;
-                    vertices[x][y][z][3]= 1;
-                }
+                float altz = -z * DEPTH;
+                vertices[x][z][0]= x;
+                vertices[x][z][1]= altz;
+
+            }
+            else
+            {
+                float altx = x+0.5;
+                float altz = -z * DEPTH;
+                vertices[x][z][0]= altx;
+                vertices[x][z][1]= altz;
             }
         }
     }
@@ -86,68 +80,68 @@ static void triangles(int a, int b, int c)
 
     if(c%2 == 0)
     {
-        //for even row  pointing up triangles
-        glColor3ub(0,0,0);
+        //for even row  pointing toward positive z facing up direction triangles
+        glColor3ub(200,200,200);
         glBegin(GL_POLYGON);
-            glVertex4d(vertices[a][b][c][0],vertices[a][b][c][1],vertices[a][b][c][2],1);
-            glVertex4d(vertices[adown][b][cdown][0],vertices[adown][b][cdown][1],vertices[adown][b][cdown][2],1);
-            glVertex4d(vertices[a][b][cdown][0],vertices[a][b][cdown][1],vertices[a][b][cdown][2],1);
+            glVertex4d(vertices[a][c][0],b,vertices[a][c][1],1);
+            glVertex4d(vertices[a][cup][0],b,vertices[a][cup][1],1);
+            glVertex4d(vertices[adown][cup][0],b,vertices[adown][cup][1],1);
         glEnd();
 
         glColor3ub(255,255,255);
         glBegin(GL_LINE_LOOP);
-            glVertex4d(vertices[a][b][c][0],vertices[a][b][c][1],vertices[a][b][c][2],1);
-            glVertex4d(vertices[adown][b][cdown][0],vertices[adown][b][cdown][1],vertices[adown][b][cdown][2],1);
-            glVertex4d(vertices[a][b][cdown][0],vertices[a][b][cdown][1],vertices[a][b][cdown][2],1);
+            glVertex4d(vertices[a][c][0],b,vertices[a][c][1],1);
+            glVertex4d(vertices[a][cup][0],b,vertices[a][cup][1],1);
+            glVertex4d(vertices[adown][cup][0],b,vertices[adown][cup][1],1);
         glEnd();
 
-        //for even row pointing down triangles
-        glColor3ub(0,0,0);
+        //for even row pointing toward negative z facing up triangles
+        glColor3ub(200,200,200);
         glBegin(GL_POLYGON);
-            glVertex4d(vertices[adown][b][c][0],vertices[adown][b][c][1],vertices[adown][b][c][2],1);
-            glVertex4d(vertices[adown][b][cdown][0],vertices[adown][b][cdown][1],vertices[adown][b][cdown][2],1);
-            glVertex4d(vertices[a][b][c][0],vertices[a][b][c][1],vertices[a][b][c][2],1);
+            glVertex4d(vertices[a][c][0],b,vertices[a][c][1],1);
+            glVertex4d(vertices[adown][cup][0],b,vertices[adown][cup][1],1);
+            glVertex4d(vertices[adown][c][0],b,vertices[adown][c][1],1);
         glEnd();
 
         glColor3ub(255,255,255);
         glBegin(GL_LINE_LOOP);
-            glVertex4d(vertices[adown][b][c][0],vertices[adown][b][c][1],vertices[adown][b][c][2],1);
-            glVertex4d(vertices[adown][b][cdown][0],vertices[adown][b][cdown][1],vertices[adown][b][cdown][2],1);
-            glVertex4d(vertices[a][b][c][0],vertices[a][b][c][1],vertices[a][b][c][2],1);
+            glVertex4d(vertices[a][c][0],b,vertices[a][c][1],1);
+            glVertex4d(vertices[adown][cup][0],b,vertices[adown][cup][1],1);
+            glVertex4d(vertices[adown][c][0],b,vertices[adown][c][1],1);
         glEnd();
 
 
     }
     else
     {
-        //for odd row pointing up triangles
-        glColor3ub(0,0,0);
+        //for odd row facing up pointing to positive z up triangles
+        glColor3ub(200,200,200);
         glBegin(GL_POLYGON);
-            glVertex4d(vertices[a][b][c][0],vertices[a][b][c][1],vertices[a][b][c][2],1);
-            glVertex4d(vertices[a][b][cdown][0],vertices[a][b][cdown][1],vertices[a][b][cdown][2],1);
-            glVertex4d(vertices[aup][b][cdown][0],vertices[aup][b][cdown][1],vertices[aup][b][cdown][2],1);
+            glVertex4d(vertices[a][c][0],b,vertices[a][c][1],1);
+            glVertex4d(vertices[aup][cup][0],b,vertices[aup][cup][1],1);
+            glVertex4d(vertices[a][cup][0],b,vertices[a][cup][1],1);
         glEnd();
 
         glColor3ub(255,255,255);
         glBegin(GL_LINE_LOOP);
-            glVertex4d(vertices[a][b][c][0],vertices[a][b][c][1],vertices[a][b][c][2],1);
-            glVertex4d(vertices[a][b][cdown][0],vertices[a][b][cdown][1],vertices[a][b][cdown][2],1);
-            glVertex4d(vertices[aup][b][cdown][0],vertices[aup][b][cdown][1],vertices[aup][b][cdown][2],1);
+            glVertex4d(vertices[a][c][0],b,vertices[a][c][1],1);
+            glVertex4d(vertices[aup][cup][0],b,vertices[aup][cup][1],1);
+            glVertex4d(vertices[a][cup][0],b,vertices[a][cup][1],1);
         glEnd();
 
-        //for odd row pointing down triangles
-        glColor3ub(0,0,0);
+        //for odd row pointing to negative z direction facing up triangles
+        glColor3ub(200,200,200);
         glBegin(GL_POLYGON);
-            glVertex4d(vertices[adown][b][c][0],vertices[adown][b][c][1],vertices[adown][b][c][2],1);
-            glVertex4d(vertices[a][b][cdown][0],vertices[a][b][cdown][1],vertices[a][b][cdown][2],1);
-            glVertex4d(vertices[a][b][c][0],vertices[a][b][c][1],vertices[a][b][c][2],1);
+            glVertex4d(vertices[a][c][0],b,vertices[a][c][1],1);
+            glVertex4d(vertices[a][cup][0],b,vertices[a][cup][1],1);
+            glVertex4d(vertices[adown][c][0],b,vertices[adown][c][1],1);
         glEnd();
 
         glColor3ub(255,255,255);
         glBegin(GL_LINE_LOOP);
-            glVertex4d(vertices[adown][b][c][0],vertices[adown][b][c][1],vertices[adown][b][c][2],1);
-            glVertex4d(vertices[a][b][cdown][0],vertices[a][b][cdown][1],vertices[a][b][cdown][2],1);
-            glVertex4d(vertices[a][b][c][0],vertices[a][b][c][1],vertices[a][b][c][2],1);
+            glVertex4d(vertices[a][c][0],b,vertices[a][c][1],1);
+            glVertex4d(vertices[a][cup][0],b,vertices[a][cup][1],1);
+            glVertex4d(vertices[adown][c][0],b,vertices[adown][c][1],1);
         glEnd();
 
     }
@@ -164,35 +158,37 @@ static void triangle(int a, int b, int c)
 
     if(c%2 == 0)
     {
-        glColor3ub(0,0,0);
+        //for even row  pointing toward positive z facing up direction triangles
+        glColor3ub(200,200,200);
         glBegin(GL_POLYGON);
-            glVertex4d(vertices[a][b][c][0],vertices[a][b][c][1],vertices[a][b][c][2],1);
-            glVertex4d(vertices[adown][b][cdown][0],vertices[adown][b][cdown][1],vertices[adown][b][cdown][2],1);
-            glVertex4d(vertices[a][b][cdown][0],vertices[a][b][cdown][1],vertices[a][b][cdown][2],1);
+            glVertex4d(vertices[a][c][0],b,vertices[a][c][1],1);
+            glVertex4d(vertices[a][cup][0],b,vertices[a][cup][1],1);
+            glVertex4d(vertices[adown][cup][0],b,vertices[adown][cup][1],1);
         glEnd();
 
         glColor3ub(255,255,255);
         glBegin(GL_LINE_LOOP);
-            glVertex4d(vertices[a][b][c][0],vertices[a][b][c][1],vertices[a][b][c][2],1);
-            glVertex4d(vertices[adown][b][cdown][0],vertices[adown][b][cdown][1],vertices[adown][b][cdown][2],1);
-            glVertex4d(vertices[a][b][cdown][0],vertices[a][b][cdown][1],vertices[a][b][cdown][2],1);
+            glVertex4d(vertices[a][c][0],b,vertices[a][c][1],1);
+            glVertex4d(vertices[a][cup][0],b,vertices[a][cup][1],1);
+            glVertex4d(vertices[adown][cup][0],b,vertices[adown][cup][1],1);
         glEnd();
     }
 
     else
     {
-        glColor3ub(0,0,0);
+         //for odd row facing up pointing to positive z up triangles
+        glColor3ub(200,200,200);
         glBegin(GL_POLYGON);
-            glVertex4d(vertices[a][b][c][0],vertices[a][b][c][1],vertices[a][b][c][2],1);
-            glVertex4d(vertices[a][b][cdown][0],vertices[a][b][cdown][1],vertices[a][b][cdown][2],1);
-            glVertex4d(vertices[aup][b][cdown][0],vertices[aup][b][cdown][1],vertices[aup][b][cdown][2],1);
+            glVertex4d(vertices[a][c][0],b,vertices[a][c][1],1);
+            glVertex4d(vertices[aup][cup][0],b,vertices[aup][cup][1],1);
+            glVertex4d(vertices[a][cup][0],b,vertices[a][cup][1],1);
         glEnd();
 
         glColor3ub(255,255,255);
         glBegin(GL_LINE_LOOP);
-            glVertex4d(vertices[a][b][c][0],vertices[a][b][c][1],vertices[a][b][c][2],1);
-            glVertex4d(vertices[a][b][cdown][0],vertices[a][b][cdown][1],vertices[a][b][cdown][2],1);
-            glVertex4d(vertices[aup][b][cdown][0],vertices[aup][b][cdown][1],vertices[aup][b][cdown][2],1);
+            glVertex4d(vertices[a][c][0],b,vertices[a][c][1],1);
+            glVertex4d(vertices[aup][cup][0],b,vertices[aup][cup][1],1);
+            glVertex4d(vertices[a][cup][0],b,vertices[a][cup][1],1);
         glEnd();
     }
 
@@ -209,11 +205,11 @@ static void display(void)
 
     glPushMatrix();
         glTranslated(-20,0,20);
-        for(int z = 1; z < 100; z++)
+        for(int z = 1; z < 2000; z++)
         {
             for(int y = 1; y < 2; y++)
             {
-                for(int x= 1; x < z; x++)
+                for(int x= 1; x < 2000; x++)
                 {
                     if(x == 1)
                     {
